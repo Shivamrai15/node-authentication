@@ -1,0 +1,1 @@
+{"root":["./src/db.ts","./src/index.ts","./src/libs/email.ts","./src/libs/verification-token.ts","./src/routes/signup.route.ts","./src/schemas/register.schema.ts"],"version":"5.7.3"}
