@@ -50,7 +50,7 @@ emailVerificationRouter.patch("/verify-email", async(req, res)=>{
 
     } catch (error) {
         console.log("EMAIL VERIFICATION API ERROR", error);
-        res.json({
+        return res.json({
             success : false,
             message : "Internal server error",
             data : {}
