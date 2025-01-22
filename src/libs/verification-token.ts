@@ -130,3 +130,47 @@ export const generateForgetPasswordToken = async(userId: string)=>{
         return null;
     }
 }
+
+
+
+export const verifyForgetPasswordToken = async(jwtToken: string)=>{
+    try {
+
+        const data = jwt.verify(jwtToken, process.env.FORGET_PASSWORD_SECRET!);
+        if (!data) {
+            return false;
+        }
+
+        // @ts-ignore
+        const {userId, token} : { userId: string, token: string } = data;
+
+        const existedToken = await db.forgetPasswordVerificationToken.findUnique({
+            where : {
+                userId,
+                token
+            }
+        });
+
+        if (!existedToken) {
+            return false
+        };
+
+        const currentTime = new Date();
+        const expiredAt = new Date(existedToken.expiredAt);
+
+        if ( currentTime > expiredAt ) {
+            return false;
+        }
+
+        await db.forgetPasswordVerificationToken.delete({
+            where : {
+                id : existedToken.id
+            }
+        });
+
+        return userId;
+        
+    } catch (error) {
+        return false;
+    }   
+}

@@ -4,6 +4,7 @@ import { emailVerificationRouter } from "./routes/email-verification.route";
 import cookieParser from "cookie-parser";
 import { loginRouter } from "./routes/login.route";
 import { forgetPasswordRouter } from "./routes/forget-password.route";
+import { verifyPasswordRouter } from "./routes/verify-password.route";
 
 
 const app = express();
@@ -16,6 +17,7 @@ app.use("/v1/auth", signUpRouter);
 app.use("/v1/auth", emailVerificationRouter);
 app.use("/v1/auth", loginRouter);
 app.use("/v1/auth", forgetPasswordRouter);
+app.use("/v1/auth", verifyPasswordRouter);
 
 
 app.listen(PORT, ()=> {
