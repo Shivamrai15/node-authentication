@@ -23,7 +23,5 @@ model EmailVerificationToken {
   id        String   @id @default(auto()) @map("_id") @db.ObjectId
   token     String
   expiredAt DateTime
-  userId    String   @db.ObjectId
-
-  @@unique([token, userId])
+  userId    String   @db.ObjectId @unique
 }
