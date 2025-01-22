@@ -25,3 +25,11 @@ model EmailVerificationToken {
   expiredAt DateTime
   userId    String   @db.ObjectId @unique
 }
+
+
+model ForgetPasswordVerificationToken {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  token     String
+  expiredAt DateTime
+  userId    String   @db.ObjectId @unique
+}

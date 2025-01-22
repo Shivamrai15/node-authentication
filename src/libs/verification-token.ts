@@ -86,3 +86,47 @@ export const verifyVerificationToken = async(jwtToken: string)=>{
         return false;
     }   
 }
+
+
+
+export const generateForgetPasswordToken = async(userId: string)=>{
+    try {
+        
+        const token = nanoid();
+        const expiredAt = new Date(Date.now() + 10*60*1000);
+
+        const existedToken = await db.forgetPasswordVerificationToken.findUnique({
+            where : {
+                userId
+            }
+        });
+
+        if (existedToken) {
+            await db.forgetPasswordVerificationToken.delete({
+                where : {
+                    id : existedToken.id
+                }
+            });
+        }
+
+        await db.forgetPasswordVerificationToken.create({
+            data : {
+                userId,
+                expiredAt,
+                token
+            }
+        });
+
+        const jwtToken = jwt.sign(
+            {userId, token},
+            process.env.FORGET_PASSWORD_SECRET!,
+            { expiresIn : "10m" }
+        );
+
+        return jwtToken;
+
+    } catch (error) {
+        console.log("ERROR WHILE GENERATING VERIFICATION TOKEN", error);
+        return null;
+    }
+}

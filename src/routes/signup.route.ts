@@ -73,7 +73,7 @@ signUpRouter.post("/register", async(req, res)=>{
         
     } catch (error) {
         console.log("REGISTER API ERROR", error);
-        res.json({
+        return res.json({
             success : false,
             message : "Internal server error",
             data : {}

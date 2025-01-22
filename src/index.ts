@@ -3,6 +3,7 @@ import { signUpRouter } from "./routes/signup.route";
 import { emailVerificationRouter } from "./routes/email-verification.route";
 import cookieParser from "cookie-parser";
 import { loginRouter } from "./routes/login.route";
+import { forgetPasswordRouter } from "./routes/forget-password.route";
 
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(cookieParser());
 app.use("/v1/auth", signUpRouter);
 app.use("/v1/auth", emailVerificationRouter);
 app.use("/v1/auth", loginRouter);
+app.use("/v1/auth", forgetPasswordRouter);
 
 
 app.listen(PORT, ()=> {
