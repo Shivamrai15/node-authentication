@@ -3,11 +3,12 @@ import { ForgetPasswordSchema } from "../schemas/forget-passowrd.schema";
 import { db } from "../db";
 import { generateForgetPasswordToken } from "../libs/verification-token";
 import { sendForgetPasswordEmail } from "../libs/email";
+import { rateLimitMiddleware } from "../middleware/ratelimit.middleware";
 
 export const forgetPasswordRouter = Router();
 
 
-forgetPasswordRouter.post("/forget-password", async(req, res)=>{
+forgetPasswordRouter.post("/forget-password", rateLimitMiddleware, async(req, res)=>{
     try {
 
         const body = req.body;

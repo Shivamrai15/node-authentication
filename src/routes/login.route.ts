@@ -5,11 +5,12 @@ import { generateVerificationToken } from "../libs/verification-token";
 import { sendVerificationEmail } from "../libs/email";
 import bcrypt from "bcryptjs";
 import { generateCookie } from "../libs/cookies";
+import { rateLimitMiddleware } from "../middleware/ratelimit.middleware";
 
 export const loginRouter = Router();
 
 
-loginRouter.post("/login", async(req, res)=>{
+loginRouter.post("/login", rateLimitMiddleware, async(req, res)=>{
     try {
 
         const body = req.body;

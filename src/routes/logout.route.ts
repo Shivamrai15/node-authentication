@@ -1,9 +1,10 @@
 import { Router } from "express";
 import jwt from "jsonwebtoken";
+import { rateLimitMiddleware } from "../middleware/ratelimit.middleware";
 
 export const logoutRouter = Router();
 
-logoutRouter.get("/logout", async(req, res)=>{
+logoutRouter.get("/logout", rateLimitMiddleware, async(req, res)=>{
     try {
 
         const cookies = await req.cookies;

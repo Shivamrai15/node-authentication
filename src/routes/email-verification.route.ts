@@ -2,11 +2,12 @@ import { Router } from "express";
 import { EmailVerificationSchema } from "../schemas/email-verification.schema";
 import { verifyVerificationToken } from "../libs/verification-token";
 import { db } from "../db";
+import { rateLimitMiddleware } from "../middleware/ratelimit.middleware";
 
 export const emailVerificationRouter = Router();
 
 
-emailVerificationRouter.patch("/verify-email", async(req, res)=>{
+emailVerificationRouter.patch("/verify-email", rateLimitMiddleware, async(req, res)=>{
     try {
         
         const body = req.body;

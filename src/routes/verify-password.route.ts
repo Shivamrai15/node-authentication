@@ -3,11 +3,12 @@ import { VerifyPasswordSchema } from "../schemas/verify-password.schema";
 import { verifyForgetPasswordToken } from "../libs/verification-token";
 import bcrypt from "bcryptjs";
 import { db } from "../db";
+import { rateLimitMiddleware } from "../middleware/ratelimit.middleware";
 
 
 export const verifyPasswordRouter = Router();
 
-verifyPasswordRouter.patch("/verify-password", async(req, res)=>{
+verifyPasswordRouter.patch("/verify-password", rateLimitMiddleware, async(req, res)=>{
     try {
         
         const body = req.body;

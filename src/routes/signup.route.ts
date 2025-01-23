@@ -4,12 +4,13 @@ import { db } from "../db";
 import bcrypt from "bcryptjs";
 import { generateVerificationToken } from "../libs/verification-token";
 import { sendVerificationEmail } from "../libs/email";
+import { rateLimitMiddleware } from "../middleware/ratelimit.middleware";
 
 
 export const signUpRouter = Router();
 
 
-signUpRouter.post("/register", async(req, res)=>{
+signUpRouter.post("/register", rateLimitMiddleware, async(req, res)=>{
     try {
 
         const body = req.body;
